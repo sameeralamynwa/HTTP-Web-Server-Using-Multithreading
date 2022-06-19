@@ -1,2 +1,2 @@
-# Chat-Application-Using-Multi-threading
+# Chat-Application-Using-Multithreading
 A simplistic chat application utilising multi-threading for handling clients built in Python.
