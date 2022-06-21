@@ -1,9 +1,15 @@
 class Client:
-    def Client(self):
-        self.client_sock=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    def Client(self, portNumber = 80):
+        clientSocketFD = socket.socket();
 
-    def send():
+    def connectToServer(self):
+        clientSocketFD.connect(('127.0.0.1', portNumber))
+
+    def sendMessage(self):
         pass
-    def receive():
-        pass
+
+    def receiveMessage(self):
+        print(clientSocketFD.recv(1024).decode())
     
+    def __del__(self):
+        clientSocketFD.close();
