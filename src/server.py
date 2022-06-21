@@ -1,25 +1,24 @@
-import consts
-
+import socket, consts
 
 class Server:
-    def Server(self, portNumber = 80):
+    def __init__(self, portNumber = 80):
         self.serverSocketFD = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.serverSocketFD.bind(('', portNumber))
         self.portNumber = portNumber
 
     def listenPassively(self):
-        serverSocketFD.listen(consts.maxQueuedConnections)
+        self.serverSocketFD.listen(consts.maxQueuedConnections)
 
     def acceptFromClient(self):
-        self.clientSocketFD, self.clientAddress = serverSocketFD.accept()
+        self.clientSocketFD, self.clientAddress = self.serverSocketFD.accept()
+        return self.clientSocketFD, self.clientAddress
 
-    def sendMessage(self):
-        clientSocketFD.send('Thanks for connecting'.encode())
+    def sendMessage(self, messageFromServer = 'Thanks for connecting'):
+        self.clientSocketFD.send(messageFromServer.encode())
 
     def receiveMessage(self):
-        pass
+        return self.clientSocketFD.recv(1024).decode()
     
     def __del__(self):
-        serverSocketFD.close()
-        clientSocketFD.close()
-
+        self.serverSocketFD.close()
+        self.clientSocketFD.close()
