@@ -13,12 +13,12 @@ class Server:
         self.clientSocketFD, self.clientAddress = self.serverSocketFD.accept()
         return self.clientSocketFD, self.clientAddress
 
-    def sendMessage(self, messageFromServer = 'Thanks for connecting'):
-        self.clientSocketFD.send(messageFromServer.encode())
+    def sendMessage(self, messageFromServer = 'Thanks for connecting'.encode()):
+        self.clientSocketFD.sendall(messageFromServer)
 
     def receiveMessage(self):
-        return self.clientSocketFD.recv(1024).decode()
+        return self.clientSocketFD.recv(1024)#.decode()
     
     def __del__(self):
-        self.serverSocketFD.close()
         self.clientSocketFD.close()
+        self.serverSocketFD.close()

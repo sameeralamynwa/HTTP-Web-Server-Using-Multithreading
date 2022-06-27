@@ -2,17 +2,18 @@ import sys
 
 sys.path.insert(1, '../')
 
-import server
+import server, webfilehandler, consts
 
 class TestServer:
     def __init__(self):
         pass
 
     def testConnection(self):
-        serverObject = server.Server()
+        webFileHandlerObject = webfilehandler.WebFileHandler('./index.html')
+        serverObject = server.Server(1235)
         serverObject.listenPassively()
         serverObject.acceptFromClient()
-        serverObject.sendMessage()
+        serverObject.sendMessage(consts.httpHeader + webFileHandlerObject.readWebFile(-1))
         print(serverObject.receiveMessage())
         
 
