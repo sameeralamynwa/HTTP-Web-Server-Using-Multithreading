@@ -1,10 +1,13 @@
 import socket, consts
 
 class Server:
-    def __init__(self, portNumber = 80):
+    def __init__(self, ip = '', portNumber = 80):
         self.serverSocketFD = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.serverSocketFD.bind(('', portNumber))
+        self.serverSocketFD.bind((ip, portNumber))
         self.portNumber = portNumber
+    
+    def setParameter(self, key, value):
+        self.serverSocketFD.setsockopt(socket.SOL_SOCKET, key, value) 
 
     def listenPassively(self):
         self.serverSocketFD.listen(consts.maxQueuedConnections)
@@ -17,7 +20,10 @@ class Server:
         self.clientSocketFD.sendall(messageFromServer)
 
     def receiveMessage(self):
-        return self.clientSocketFD.recv(1024)#.decode()
+        return self.clientSocketFD.recvall()#.decode()
+    
+    def closeClientConnection(self):
+        self.clientSocketFD.close()
     
     def __del__(self):
         self.clientSocketFD.close()
