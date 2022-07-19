@@ -15,11 +15,14 @@ class TestServer:
         serverObject.listenPassively()
         clientThreads = []
         while True:
-            (clientSocketFD, (ip, portNumber)) = serverObject.acceptFromClient()
-            print("Connection estabilished from " + clientSocketFD + " address " + ip + " and port " + str(portNumber))
-            clientThread = clientthread.ClientThread(clientSocketFD, ip, portNumber)
-            clientThread.start()
-            clientThreads.append(clientThread)
+            try:
+                (clientSocketFD, (ip, portNumber)) = serverObject.acceptFromClient()
+                print("Connection estabilished from " + clientSocketFD + " address " + ip + " and port " + str(portNumber))
+                clientThread = clientthread.ClientThread(clientSocketFD, ip, portNumber)
+                clientThread.start()
+                clientThreads.append(clientThread)
+            except KeyboardInterrupt:
+                break
         
         for thread in clientThreads:
             thread.join()
