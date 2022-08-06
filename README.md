@@ -1,4 +1,4 @@
-# HTTP-Web-Server-Using-Multithreading
+# HTTP-Web-Server-using-Multithreading
 
 • Socket-based web server in Python designed to handle multiple clients through multi-threading. <br/>
 • Python's libraries for socket with extensive documentation proved to be highly valuable in easing development. <br/>
